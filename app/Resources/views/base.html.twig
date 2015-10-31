@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+                 <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}" />   
+        <title>{% block title %}SecuriNets Challenge{% endblock %}</title>
+     {% block javascripts %}
+        {% javascripts 
+               'bundles/securinetsfrontoffice/js/jquery-1.9.1.js'
+               'bundles/securinetsfrontoffice/js/jquery-ui-1.10.3.custom.js'
+               'bundles/securinetsfrontoffice/css/bootstrap/js/bootstrap.js'   
+        %}
+               <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %} 
+ 
+{% endblock %}
+
+{% block stylesheets %}
+
+     {% stylesheets filter='cssrewrite'
+               'bundles/securinetsfrontoffice/css/bootstrap/css/bootstrap-theme.css'
+               'bundles/securinetsfrontoffice/css/bootstrap/css/bootstrap.css'
+			   'bundles/securinetsfrontoffice/css/jquery-ui-1.10.3.custom.css'  
+        %}
+			   <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+		{% endstylesheets %}
+<style>
+		
+.lien
+{
+font-size:20px ;
+color:blue ;
+}
+.informations
+{
+color : black ;
+}
+body
+{
+height :100%;
+width : 100% ;
+background-image: url({{ asset('fond.jpg') }});
+background-position: center 0%;
+color: #DDD;
+font-family: 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
+}		
+.footer
+{
+background-color: #000;
+color: #DDD;
+position:relative;
+bottom:0%;
+left:0%;
+width : 100% ;
+margin : 0px 0px 0px 0px ;
+}
+.monBox {
+height : 100% ;
+margin : 20px 20px 20px 20px ;
+padding-top: 5px ;
+padding-left: 5px ;
+padding-right : 5px ;
+}
+</style>
+{% endblock %}
+     </head>
+<body>
+{% block body %}
+
+{% endblock %} 
+</body>
+</html>

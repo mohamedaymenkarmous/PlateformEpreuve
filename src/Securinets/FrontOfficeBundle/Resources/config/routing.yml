@@ -1,0 +1,89 @@
+index:
+    path: /
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /
+    defaults : { _controller: SecurinetsFrontOfficeBundle:Default:index}
+
+home:
+    path: /home
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern:  /home
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:home}
+
+getRules:
+    path: /getRules
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern: /getRules
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:getRules }
+
+getTasks:
+    path: /getTasks
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern: /getTasks
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Challenge:getTasks }
+
+validate:
+    path: /validate/epreuve/{id}
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /validate/epreuve/{id}
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Challenge:validate , id : 0}
+    requirements:
+        id : \d+
+
+score:
+    path: /score
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern: /score
+    defaults : { _controller: SecurinetsFrontOfficeBundle:Challenge:score }
+
+erreurConnexion:
+    path: /erreurConnexion
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern: /erreurConnexion
+    defaults : { _controller: SecurinetsFrontOfficeBundle:Challenge:erreurConnexion }
+
+getRemaingTime:
+    path: /getRemaingTime
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern: /getRemaingTime
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Chrono:remaingTime}
+
+getTask:
+    path: /getTask/{id_epreuve}
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /getTask/{id_epreuve}
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Challenge:getTask,id_epreuve : 0}
+    requirements:
+        id : \d+
+
+countDown:
+    path: /countDown
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /countDown
+    defaults: {  _controller: SecurinetsFrontOfficeBundle:Default:countDown } 
+
+challengerInfo:
+    path: /challengerInfo
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /challengerInfo
+    defaults : {  _controller: SecurinetsFrontOfficeBundle:Challenge:challengerInfo }
+
+getNews:
+    path: /getNews
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /getNews
+    defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:getNews }
+
+stat:
+    path: /stat
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /stat
+    defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:stat }
+
+#getFlagForm:
+#    path: /getFlagForm
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /getFlagForm
+#    defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:getFlagForm }
+
+

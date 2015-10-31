@@ -1,0 +1,25 @@
+login:
+    path: /login
+#    resource: "Securinets\UsersBundle\Controller\DefaultController"
+#    pattern: /login
+    defaults: { _controller: SecurinetsUsersBundle:Default:login }
+
+login_check:
+    path: /login_check
+#    resource: "Securinets\UsersBundle\Controller\DefaultController"
+#    resource: .
+#    pattern: /login_check
+
+logout:
+    path: /logout
+#    resource: "Securinets\UsersBundle\Controller\DefaultController"
+#    resource: .
+#    pattern: /logout
+
+#register:
+#    path: /register
+#    resource: "Securinets\UsersBundle\Controller\DefaultController"
+#    pattern: /login
+#    defaults: { _controller: SecurinetsUsersBundle:Default:register }
+
+

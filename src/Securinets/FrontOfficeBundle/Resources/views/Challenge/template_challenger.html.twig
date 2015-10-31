@@ -1,0 +1,57 @@
+{% extends '::template_parent.html.twig' %}
+
+		{% block header %}
+
+<div class="navbar navbar-inverse">
+<div class="container">
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li><img  style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
+<li ><a onClick="getPage('{{ path('getRules') }}')" class="lien">Rules</a></li>
+<li ><a onClick="getPage('{{ path('getTasks') }}')" class="lien">Tasks</a></li>
+<li ><a  onClick="getPage('{{ path('score') }}')"  class="lien">Ranking</a></li>
+<li ><a onClick="getPage('{{ path('stat')}}')" class="lien">Statistiques</a></li>
+</ul>
+<div class="navbar-right">
+<a href="{{ path('logout') }}"><button class="btn btn-danger " style="height:50px;"><b>Log out <br>({{ app.user.username  }})</b></button></a>
+</div>
+</div>
+</div>
+</div>	
+		{% endblock %}
+		
+		     {% block javascripts %}
+		     {{ parent() }}
+		     <script  language="javascript">
+		     		function getNews(url)
+							{
+							$.ajax(
+								{
+								type : "GET" ,
+								url : url ,
+								dataType : "json",
+								success : function(data){
+								if (data.exist) {
+									alert("Info \n "+data.news);
+								}
+							}
+								}
+								);
+							}
+					window.setInterval(function(){getNews("{{ path('getNews') }}")}
+							,30000
+							);
+		     		</script>
+		     {% endblock %}
+		
+		
+		
+		{% block mainBox %}
+		 {{ render(controller('SecurinetsFrontOfficeBundle:Default:getRules')) }}
+		{% endblock %}
+		
+		
+		
+		{% block info_challenger %}
+				{{ render(controller('SecurinetsFrontOfficeBundle:Challenge:challengerInfo')) }}
+{% endblock %}

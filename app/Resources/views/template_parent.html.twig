@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+                 <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}" />   
+        <title>{% block title %}SecuriNets Challenge{% endblock %}</title>
+     {% block javascripts %}
+        {% javascripts 
+               'bundles/securinetsfrontoffice/js/jquery-1.9.1.js'
+               'bundles/securinetsfrontoffice/js/jquery-ui-1.10.3.custom.js'
+               'bundles/securinetsfrontoffice/css/bootstrap/js/bootstrap.js'  
+        %}
+               <script type="text/javascript" src="{{ asset_url }}"></script>
+<script language="javascript">
+		function getPage(url)
+		{
+			$.ajax( {
+				type : "GET",
+			    url : url , 
+			    success : function(data)
+			        {
+			        $('#mainBoxDiv').html(data);
+			        },
+		            error : function(xhr,options,erorrs)
+		            {
+							if (xhr.status == 403 ) alert("Your query was banned : code 403") ;
+							else alert("An error has occurred");
+		            }
+			});
+			$.ajax( {
+				type : "GET",
+			    url : "{{ path('challengerInfo') }}" , 
+			    success : function(data1)
+			        {
+			        $('#infoChallengerDiv').html(data1);
+			        },
+		            error : function(xhr1,options1,erorrs1)
+		            {
+							if (xhr1.status == 403 ) alert("Your query was banned : code 403") ;
+							else alert("An error has occurred");
+		            }
+			});
+		}
+
+</script>
+        {% endjavascripts %} 
+ 
+{% endblock %}
+
+{% block stylesheets %}
+
+     {% stylesheets filter='cssrewrite'
+               'bundles/securinetsfrontoffice/css/bootstrap/css/bootstrap-theme.css'
+               'bundles/securinetsfrontoffice/css/bootstrap/css/bootstrap.css'
+			   'bundles/securinetsfrontoffice/css/jquery-ui-1.10.3.custom.css'  
+			   'bundles/securinetsfrontoffice/css/task.css'  
+			   '../app/Resources/public/css/myCss.css'
+        %}
+			   <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+		{% endstylesheets %}
+
+<style>
+	.lien:hover
+	{
+	cursor:  pointer;
+	background-color : #505050 ;
+	}	
+	</style>
+		
+		
+{% endblock %}
+
+     </head>
+<body style="background-image : url('{{ asset('ctf_website.jpg') }}'); /*background-size: cover ; */ background-attachment:fixed;background-size:100% 100%;background-repeat:no-repeat;">
+
+		<header>
+		{% block header %}
+		
+		<div class="navbar navbar-inverse">
+<div class="container">
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li><img class="lien" onClick="$(window).attr('location','{{ path('login') }}')"  style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
+<li ><a onClick="getPage('{{ path('getRules') }}')" class="lien">Rules</a></li>
+<li ><a  onClick="getPage('{{ path('score') }}')"  class="lien">Ranking</a></li>
+</ul>
+</div>
+</div>
+</div>		
+		{% endblock %}
+</header>
+<style>
+		#countDownBlock
+		{
+		position : relative ;
+		height : 50px ;
+		width : 30% ;
+		margin-left : 5%;
+		
+		}
+</style>
+<div id="countDownBlock" >
+{% block countDownBlock %}
+		 {{ render(controller('SecurinetsFrontOfficeBundle:Default:countDown')) }}
+{% endblock %}
+</div>
+
+<aside class="aside2"  id="infoChallengerDiv">
+{% block info_challenger %}
+			
+{% endblock %}
+</aside>			
+		<article id="mainBoxDiv">
+		{% block mainBox %}	
+		{% endblock %}
+</article>
+</body>
+</html>

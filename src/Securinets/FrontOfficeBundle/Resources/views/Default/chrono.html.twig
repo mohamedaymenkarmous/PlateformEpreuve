@@ -1,0 +1,44 @@
+	{% if time != false %}
+<style>
+	@font-face {
+	  font-family: 'digi';
+	  src: url('{{ asset("bundles/securinetsfrontoffice/DS-DIGII.TTF")}}' );
+                           }
+.clock {
+	     height : 50px ;
+	position :relative ;
+	top : 0px ;
+	  font-size : 40px ;
+	    font-family : 'digi' ;	
+		color : #27A400 ;
+		margin-top : 5px;
+		margin-bottom : 10px;
+		font-weight : bold ;
+	width: 100%;
+	height : 50px ;
+	border-radius: 20px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#000), color-stop(.5, rgba(0, 100, 0, .5)), to(#000));
+	background-image: -moz-linear-gradient(top, #000, rgba(0, 100, 0, .5) 50%, #000);
+	-webkit-transition: opacity 1000ms ease;
+	-moz-transition: opacity 1000ms ease;
+}
+
+                  
+	.on
+	{
+	color : #27A400 ;
+	}
+	.off
+	{
+	color : #186500 ;
+	}
+	</style>
+		
+	<div class="clock">		<center>
+			<span id="hours" >{{ time['h'] }} </span><span name="dot" class="on"> : </span>
+			<span id="minutes" >{{ time['m'] }} </span> <span name="dot" class="on"> :</span>
+			<span id="seconds" >{{ time['s'] }} </span>
+			</center>
+		</div>
+		<script type="text/javascript" src="{{ asset('bundles/securinetsfrontoffice/js/clock.js') }}"></script>
+	{% endif %}

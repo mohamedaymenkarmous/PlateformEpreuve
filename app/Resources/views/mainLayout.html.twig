@@ -1,0 +1,164 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+{{ parent() }}
+<script language="javascript">
+window.setInterval(function(){
+	$.ajax({
+		type : 'get',
+        url : '{{ path("get_scroll_text") }}',
+        timeout : 5000 ,
+        success: function(data)
+        {
+         $('#scrollText').html(data);
+        }
+		});
+},15000);
+
+window.setInterval(function()
+		{
+	  hour = $('#hours').html();
+	  min = $('#mins').html() ;
+	  sec = $('#secs').html() ;
+	   if ( sec != 0 || min != 0 || hour != 0 )
+	   {
+if (sec == 0 ) { 
+	sec= 59 ; 
+	if ( min == 0 ) {
+min = 59;
+hour = hour - 1 ;
+		}else
+		{
+			min = min - 1 ;
+		}	
+	}else
+	{
+		sec -- ;
+	}
+$('#hours').html(hour);
+$('#mins').html(min) ;
+$('#secs').html(sec) ;	  
+	   }else
+	   {
+		   //fin chrono ..
+	   }
+
+	},998
+		); 
+
+function getPage(url)
+{
+$.ajax(
+		{
+			url : url ,
+		    success  : function(data)
+		    {
+              $('#main_frame').html(data);
+		    }
+		}
+		);
+}
+
+
+function show_hide_List(dom)
+{
+if (dom.is(':visible'))
+{
+dom.hide("slow");
+}
+else
+{
+dom.show("slow");
+}
+}
+
+
+
+</script>
+
+{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.epreuveStyle
+{
+display : none ;
+}
+#task_validation_zone
+{
+display : none ;
+position :absolute ;
+left : 50% ;
+top : 40% ;
+}
+#list_of_tasks_zone
+{
+position :relative ;
+left : 0% ;
+top : 0% ;
+width:40%;
+height : 100%;
+overflow-y : auto ;
+}
+.lien
+{
+font-size:20px ;
+color:blue ;
+}
+.informations
+{
+color : red ;
+}
+
+#chrono_container
+{
+font-size: 25px ;
+color : #1B57D0 ;
+font-weight: bold; 
+margin : 2% 10px 0px 200px ;
+}
+
+</style>
+{% endblock %}
+{% block body %}
+{% block top_barre %}
+<div class="navbar navbar-inverse">
+<div class="container">
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li><img style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
+<li ><a href="#" onClick="getPage('{{ path('getTasks') }}')" class="lien">Challenges</a></li>
+<li ><a href="#" onClick="getPage('{{ path('score') }}')" class="lien">Scores</a></li>
+{% if chrono  %}
+<li>
+<div id="chrono_container">
+<span id="hours">{{ h }}</span> :
+<span id="mins">{{ m }}</span> :
+<span id="secs">{{ s }}</span>
+</div>
+</li>
+{% endif %}
+</ul>
+<div class="navbar-right">
+<a href="{{ path('logout') }}"><button class="btn btn-danger " style="height:50px;width:80px;"><b>Log out <br>({{ app.user.username }})</b></button></a>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block informations %}
+<section class="jumbotron informations">
+<marquee id="text_defiler">
+<p id="scrollText" onMouseOver="document.getElementById('text_defiler').stop();" onMouseOut="document.getElementById('text_defiler').start();" >
+{{ scroll_text }}
+</p>
+</marquee>
+</section>
+{% endblock %}
+
+<div id="main_frame" class="monBox">
+
+</div>
+<br>
+{% endblock %}

@@ -1,0 +1,70 @@
+index:
+    pattern : /
+    defaults : { _controller: SecurinetsFrontOfficeBundle:Default:index}
+    requirements:
+        _scheme:  https
+
+home:
+    pattern:  /home
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:home}
+    requirements:
+        _scheme:  https
+getRules:
+    pattern: /getRules
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:getRules }
+    requirements:
+        _scheme:  https
+getTasks:
+    pattern: /getTasks
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Challenge:getTasks }
+    requirements:
+        _scheme:  https
+validate:
+    pattern : /validate/epreuve/{id}
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Challenge:validate , id : 0}
+    requirements:
+        id : \d+
+        _scheme:  https
+
+score:
+    pattern: /score
+    defaults : { _controller: SecurinetsFrontOfficeBundle:Challenge:score }
+    requirements:
+        _scheme:  https
+
+erreurConnexion:
+    pattern: /erreurConnexion
+    defaults : { _controller: SecurinetsFrontOfficeBundle:Challenge:erreurConnexion }
+    requirements:
+        _scheme:  https
+
+getRemaingTime:
+    pattern: /getRemaingTime
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Chrono:remaingTime}
+    requirements:
+        _scheme:  https
+
+getTask:
+    pattern : /getTask/{id_epreuve}
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Challenge:getTask,id_epreuve : 0}
+    requirements:
+        id : \d+
+        _scheme:  https
+
+countDown:
+    pattern : /countDown
+    defaults: {  _controller: SecurinetsFrontOfficeBundle:Default:countDown }
+    requirements:
+        _scheme:  https
+
+challengerInfo:
+    pattern : /challengerInfo
+    defaults : {  _controller: SecurinetsFrontOfficeBundle:Challenge:challengerInfo }
+    requirements:
+        _scheme:  https
+
+getNews:
+    pattern : /getNews
+    defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:getNews }
+    requirements:
+        _scheme:  https

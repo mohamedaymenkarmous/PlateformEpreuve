@@ -1,0 +1,130 @@
+{% set debut_challenge="2015,03,25,06,00" %}
+{% set fin_challenge=debut_challenge %}
+<style>
+.tableScore
+{
+border: 4px inset grey;
+width : 80% ;
+}
+
+th 
+{
+border: 4px inset grey;
+text-align: center;
+font-size : 18px;
+color : white ;
+}
+
+td
+{
+border: 4px inset grey;
+text-align: center;
+font-size : 14px;
+}
+
+</style>
+<div style=" width: 100% ; height : 100% ;" > <!-- overflow-y : auto ; -->
+<br>
+<center>
+<h2>Statistiques</h2>
+
+{% set i_itt3=[] %}{% set itt3=[] %}
+{% for user in list %}
+  	{% set itt = user.epreuves %}
+	{% set i_itt=[] %}{% set itt2=[] %}
+	{% if itt|length>=1 %}
+		{% for i in 0..(itt|length-1) %}
+			{% set min=i %}
+			{% for k in 0..(itt|length-1) %}
+				{% if k not in i_itt %}{% set min = k %}{% endif %}
+			{% endfor %}
+			{% for j in 0..(itt|length-1) %}
+				{% if (itt[min] >= itt[j]) and (j not in i_itt) %} {% set min = j %} {% endif %}
+				{% set i=i+1 %}
+	 		{% endfor %}
+			{% set itt2 =itt2|merge([itt[min]]) %}
+			{% set i_itt=i_itt|merge([min]) %}
+			{% if itt[min].time|date_modify("-1 month")|date('Y,m,d,H,i')>fin_challenge %}{% set fin_challenge=itt[min].time|date_modify("-1 month")|date('Y,m,d,H,i') %}{% endif %}
+		{% endfor %}
+	{% endif %}
+	{% set i_itt3=i_itt3|merge([i_itt]) %}{% set itt3=itt3|merge([itt2]) %}
+{% endfor %}
+
+  <tbody>
+
+		<script type="text/javascript" src="/js/c52743d_jquery-1.9.1_1.js"></script>
+		<script type="text/javascript">
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'spline',
+		height: '600'
+            },
+            title: {
+                text: 'Statistiques CTF Securinets Qual 2015'
+            },
+            subtitle: {
+                text: '20 Mars 2015 (20:00) -> 21 Mars 2015 (20:00)'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                	day: '%b %e',
+                	month: '%B',
+                	year: '%Y',
+                	hour:'%H',
+                	minute:'%M'
+                },
+                title: {
+                    text: 'Date'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Score'
+                },
+                min: 0
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x:%H:%M %b %e}: {point.y} Points'
+            },
+
+            series: [
+		{% set k=0 %}
+		{% for user in list %}
+		{
+                name: '{{  user.username }}',
+                // Define the data points. All series have a dummy year
+                // of 1970/71 in order to be compared on the same x axis. Note
+                // that in JavaScript, months start at 0 for January, 1 for February etc.
+                data: [
+  		    {% set i = 1 %}
+		    {% set pts = 0 %}
+		    {% if itt3[k]|length>0 %}
+			[Date.UTC({{ debut_challenge }}), 0 ],
+	  		{% for us_ep in itt3[k] %}
+	                    [Date.UTC({{ us_ep.time|date_modify("-1 month")|date('Y,m,d,H,i') }}), {% set pts=pts+us_ep.epreuve.points %}{{ pts }} ]
+			    {# if us_ep!=itt3[k]|date_modify("-1 month")|last #} , {# endif #}
+	  		    {% set i = i +1 %}
+	  		{% endfor %}
+			[Date.UTC({{ fin_challenge }}), {{ pts }} ]
+		    {% endif %}
+                ]
+            }
+	    {% if user!=list|last %} , {% endif %}
+	    {% set k=k+1 %}
+  	    {% endfor %}
+	    ]
+        });
+    });
+    
+
+		</script>
+	</head>
+	<body>
+<script src="/js/highcharts/js/highcharts.js"></script>
+<script src="/js/highcharts/js/modules/exporting.js"></script>
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</center> 
+</div>

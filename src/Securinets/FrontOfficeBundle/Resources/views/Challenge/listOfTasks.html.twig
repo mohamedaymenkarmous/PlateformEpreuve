@@ -1,0 +1,120 @@
+<script language="javascript">
+function validate(id,url)
+{
+
+$.ajax( {
+		type : "POST",
+        url : url , 
+        data : $('#epreuve_'+id+'_flag').serialize() ,
+        dataType : "json",
+        success : function(data)
+            {
+               
+               if (data.redirection)
+               {
+                   $(location).attr('href',data.url);
+               }
+               else
+               {
+                   if (data.validate)
+                   {
+                       alert("This Task is validated");
+                   }
+                   else
+                   {
+            	   if ( data.result )
+            	   { 
+                	   alert("Good ! Right Flag") ;
+            	       getPage("{{ path('getTasks') }}");
+            	   }
+                   else
+                   {
+                       if ( data.bonus )
+                       {
+                           alert(data.message);
+                       }
+                       else
+                       {
+                       alert("Wrong Flag !! \nPlease wait for 5 seconds before validating again, otherwise your account will be disable "); 
+                       }
+                   } 
+                   }
+               }
+            }
+      }
+	);
+}
+
+
+var currentTask = null ;
+
+function show_hide_validation_zone(dom)
+{
+
+	validation_zone = $('#task_validation_zone');
+	if (currentTask == null)
+	{ 
+		validation_zone.show();
+		dom.show("slow");	
+		currentTask = dom ;
+	}
+	else
+	{ 
+		if (currentTask.attr('id') == dom.attr('id') ) 
+		{  
+			dom.hide("slow");
+			validation_zone.hide("slow");
+			currentTask = null ;
+		}
+		else
+		{
+			currentTask.hide("slow");
+			dom.show("slow");
+			currentTask = dom ;
+		}
+	}
+
+}
+
+</script>
+
+<div id="list_of_tasks_zone">
+<h3>List of Tasks</h3>
+<ul class="typeStyle">
+{% for type in types %}
+<a onClick="show_hide_List($('#list{{ type }}'))"><li>{{ type }}</li></a>
+<ul class="epreuveStyle"  id="list{{ type }}">
+{% for epreuve in epreuves %}
+ {% if epreuve.type == type %}
+<a><li onClick="show_hide_validation_zone($('#epreuve{{ epreuve.id }}'))">{{ epreuve.name }} ( {{ epreuve.points }} )</li></a>
+{% endif %}
+{% endfor %}
+</ul>
+{% endfor %}
+</ul>
+</div>
+<div id="task_validation_zone" >
+{% for epreuve in epreuves %}
+{% set valide = false %}
+{% set users = epreuve.users %}
+{% for user in users %} 
+{% if app.user == user.user %}
+{% set valide = true %}
+{% endif %}
+{% endfor %}
+<div id="epreuve{{ epreuve.id }}" style="display:none ;">
+<b>Name : </b>{{ epreuve.name }} <br><br>
+{% if epreuve.description is defined %} <b>Description : </b>{{ epreuve.description }} <br><br> {% endif %}
+<b>Points: </b>{{ epreuve.points }} <br><br>
+<b>Url : </b><a href="{{epreuve.ip}}{{ epreuve.url }}" target="_tab">{{epreuve.ip}}{{ epreuve.url }}</a> <br><br>
+{% if not valide %}
+<form id="epreuve_{{ epreuve.id }}_flag" method="POST" >
+<input type="text"  name="flag"  />
+<button type="button" onClick="validate({{ epreuve.id }},'{{ path('validate',{ 'id' : epreuve.id}) }}')"><b>Validate</b></button>
+</form>
+{% else %}
+<p style="color:green ; font-size:30px;"><b>This Task is validated</b></p>
+{% endif %}
+</div>
+{% endfor %}
+</div>

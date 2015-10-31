@@ -1,0 +1,64 @@
+<script language="javascript">
+
+function validateFlag()
+{
+$('#result').html('waiting for result .. !!');
+$.ajax(
+		{
+			type: "post" ,
+			dataType : "json",
+			data : $('#FlagForm').serialize(),
+			url : '{{ path('validateFlag') }}',
+			success : function(data)
+			{
+				if(data.no)
+				{
+					$('#result').html('You don t have the right to validate you own flag  !');
+				}
+				else
+				{
+				if (data.burn)
+				{
+					$('#result').html('Someone have been faster than you  !! ');
+				}else
+				{
+				if (data.validate)
+				{
+
+					$('#result').html('Right Flag !! ');
+					window.setTimeout(function(){
+						$(location).attr('href',"{{ path('home') }}");
+						},3000);
+					
+				}
+				else
+				{
+					if (data.validated)
+					{
+						$('#result').html('You had already validate this one  !! ');
+					}
+					else
+					{
+						$('#result').html('Sorry wrong flag  !! ');
+					}
+				}
+			}
+			}
+			}
+			//n'oublie pas gestion des erreurs
+		}
+		);
+}
+</script>
+<div  style=" margin-top : 40px ;  padding : 20px 20px 20px 20px ; background-color : #101211  ;opacity : 0.9 ; border-radius : 20px ;" >
+Here you valid flags that you found . <br>
+Please wait at least 3 seconds before submitting a second time otherwise you will be banned
+<br><br>
+<center>
+{{ form_start(form,{"action" : path('validateFlag') , 'attr' : { 'id' : 'FlagForm' }  }) }}
+{{ form_widget(form.flag, { 'attr' : { 'placeholder' : 'Type the flag you found here !' , 'size' : 32} } ) }}<br><br>
+{{ form_widget(form.validate ,  {  'attr' : { 'onClick' : 'validateFlag()' } }) }}
+{{ form_end(form) }}
+<div id='result' ></div>
+</center>
+</div>

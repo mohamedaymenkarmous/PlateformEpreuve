@@ -1,0 +1,11 @@
+securinets_users:
+    resource: "@SecurinetsUsersBundle/Resources/config/routing.yml"
+    prefix:   /
+
+securinets_front_office:
+    resource: "@SecurinetsFrontOfficeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+securinets_front_office_annotation:
+    resource: "@SecurinetsFrontOfficeBundle/Controller/"
+    type: annotation

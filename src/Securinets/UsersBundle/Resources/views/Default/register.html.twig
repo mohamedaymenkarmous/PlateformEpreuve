@@ -1,0 +1,74 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+{% block top_barre %}
+<div class="navbar navbar-inverse">
+<div class="container">
+<div class="navbar-collapse collapse">
+<img style="width:80px ; height:50px;" src="{{ asset('bundles/SecurinetsFrontOffice/images/logo.png') }}">
+</div>
+</div>
+</div>
+{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.form_zone
+{
+position:absolute;
+left:38%;
+top : 20%;
+}
+.errors
+{
+color : red ;
+}
+form{
+background: #212121;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+height: 100%;
+width: 100%;
+background: -moz-radial-gradient(50% 46% 90deg,circle closest-corner, #242424, #090909);
+background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 150, from(#242424), to(#090909));
+}
+form label{
+display: block;
+padding: 10px 10px 5px 15px;
+font-size: 11px;
+color: #777;
+}
+form input{
+display: block;
+margin: 5px 10px 10px 15px;
+width: 85%;
+background: #111;
+-moz-box-shadow: 0px 0px 4px #000 inset;
+-webkit-box-shadow: 0px 0px 4px #000 inset;
+box-shadow: 0px 0px 4px #000 inset;
+outline: 1px solid #333;
+border: 1px solid #000;
+padding: 5px;
+color: #444;
+font-size: 16px;
+}
+</style>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{% endblock %}
+
+<div class="form_zone">
+
+
+
+{{ form_start(form,{"action" : path('register') , 'attr' : { 'id' : 'Register' }  }) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+
+ </div>
+
+{% endblock %}

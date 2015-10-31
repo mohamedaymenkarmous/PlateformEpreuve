@@ -1,0 +1,95 @@
+
+
+
+<style>
+#BackgroundTask 
+{
+position : relative ; top : 20px ;
+width : 100%;
+height : 100% ;
+min-width : 100%;
+min-height : 400px ;
+background-image : url('{{ asset( "bundles/securinetsfrontoffice/images/Matrix.gif") }}');
+}
+</style>
+
+<script language="javascript">
+function hideTasks()
+{
+$("#tableTasks").hide();
+$("#BackgroundTask").toggle('slow');
+}
+
+function showTasks()
+{
+	$("#BackgroundTask").hide();
+	$("#tableTasks").toggle('slow');
+}
+
+function getTask(url)
+{
+$('#zoneLoading').show();
+$('#zoneTask').hide();
+hideTasks();
+$.ajax( {
+	type : "GET",
+    url : url , 
+    success : function(data)
+        {
+        $('#zoneTask').html(data);
+        $('#zoneLoading').hide('slow');
+        $('#zoneTask').show('slow');
+        },
+        error : function(xhr,options,erorrs)
+        {
+				if (xhr.status == 403 ) alert("Your query was banned : code 403") ;
+				else alert("An error has occurred");
+        }
+});
+
+
+}
+
+</script>
+
+
+{% set n = epreuves|length %}
+{% set nc = 5 %}
+{% set nl = n // nc %}
+{% set rest = n % nc %} 
+{% if rest != 0 %} {% set nl = nl + 1 %}  {% endif %}
+{% set k = 0 %}
+
+<center>
+<div id="tasksDiv" style="width: 100% ; ">
+<div id="BackgroundTask" style="display : none ;">
+<img id="croixFermer" onClick="showTasks()" src="{{ asset('bundles/securinetsfrontoffice/images/croix.png') }}" >
+<div id="zoneLoading" ><center><img style='width:50px ; height : 50px ;' src='{{ asset('bundles/securinetsfrontoffice/images/loading.gif') }}'></center></div>
+<div id="zoneTask" ></div>
+</div>
+<table border="2" bordercolor="black"  id="tableTasks" >
+<caption><h3>Tasks</h3></caption>
+{% for i in 1..nl %}
+<tr>
+{% for j in 1..nc %}
+{% if k < n %}
+
+{% set class = "taskNV" %}
+{% if epreuves[k].id in epreuvesValides %}
+{% set class = "taskV" %}
+{% endif %}
+<td class="task {{ class }}" style="padding-left: 5px;"  onClick="getTask('{{ url('getTask',{ 'id_epreuve' : epreuves[k].id}) }}')">
+<b>{{ epreuves[k].name }} </b><br>
+<font size="2">{{ epreuves[k].type }}</font><br>
+({{ epreuves[k].points }})<br>
+</td>
+{% set k = k + 1 %}
+{% endif %}
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+</div>
+</center>
+
+

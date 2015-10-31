@@ -1,0 +1,146 @@
+<?php
+
+namespace Securinets\FrontOfficeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * 
+ * @ORM\Entity
+ *@ORM\Table()
+ *
+ */
+class Flags {
+	
+	/**
+	 * @ORM\Column(name="flag", type="string" , length = 32)
+	 * @ORM\Id
+	 */
+	private $flag ;
+	
+	/**
+	 * @ORM\ManyToOne(targetEntity = "Securinets\UsersBundle\Entity\User" , inversedBy="flags")
+	 */
+	private $equipe ;
+
+
+	/**
+	  * @ORM\Column(name="points" , type ="integer" , nullable =true )
+	  */
+	private $points ;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Securinets\FrontOfficeBundle\Entity\Flags", mappedBy="flag")
+	 */
+	private $Validatedflags;
+	
+    /**
+     * Set flag
+     *
+     * @param string $flag
+     * @return Flags
+     */
+    public function setFlag($flag)
+    {
+        $this->flag = $flag;
+    
+        return $this;
+    }
+
+    /**
+     * Get flag
+     *
+     * @return string 
+     */
+    public function getFlag()
+    {
+        return $this->flag;
+    }
+
+    /**
+     * Set equipe
+     *
+     * @param \Securinets\UsersBundle\Entity\User $equipe
+     * @return Flags
+     */
+    public function setEquipe(\Securinets\UsersBundle\Entity\User $equipe = null)
+    {
+        $this->equipe = $equipe;
+    
+        return $this;
+    }
+
+    /**
+     * Get equipe
+     *
+     * @return \Securinets\UsersBundle\Entity\User 
+     */
+    public function getEquipe()
+    {
+        return $this->equipe;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Validatedflags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add Validatedflags
+     *
+     * @param \Securinets\FrontOfficeBundle\Entity\Flags $validatedflags
+     * @return Flags
+     */
+    public function addValidatedflag(\Securinets\FrontOfficeBundle\Entity\Flags $validatedflags)
+    {
+        $this->Validatedflags[] = $validatedflags;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Validatedflags
+     *
+     * @param \Securinets\FrontOfficeBundle\Entity\Flags $validatedflags
+     */
+    public function removeValidatedflag(\Securinets\FrontOfficeBundle\Entity\Flags $validatedflags)
+    {
+        $this->Validatedflags->removeElement($validatedflags);
+    }
+
+    /**
+     * Get Validatedflags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getValidatedflags()
+    {
+        return $this->Validatedflags;
+    }
+
+    /**
+     * Set points
+     *
+     * @param integer $points
+     * @return Flags
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+    
+        return $this;
+    }
+
+    /**
+     * Get points
+     *
+     * @return integer 
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+}

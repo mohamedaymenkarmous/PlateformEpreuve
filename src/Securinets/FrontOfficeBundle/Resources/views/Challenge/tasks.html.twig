@@ -1,0 +1,113 @@
+
+
+
+<style>
+#BackgroundTask 
+{
+position : relative ; top : 20px ;
+width : 100%;
+height : 100% ;
+min-width : 100%;
+min-height : 400px ;
+background-image : url('{{ asset( "bundles/securinetsfrontoffice/images/Matrix.gif") }}');
+}
+</style>
+
+<script language="javascript">
+function hideTasks()
+{
+$("#tableTasks").hide();
+$("#BackgroundTask").toggle('slow');
+}
+
+function showTasks()
+{
+	$("#BackgroundTask").hide();
+	$("#tableTasks").toggle('slow');
+}
+
+function getTask(url)
+{
+$('#zoneLoading').show();
+$('#zoneTask').hide();
+hideTasks();
+$.ajax( {
+	type : "GET",
+    url : url , 
+    success : function(data)
+        {
+        $('#zoneTask').html(data);
+        $('#zoneLoading').hide('slow');
+        $('#zoneTask').show('slow');
+        },
+        error : function(xhr,options,erorrs)
+        {
+				if (xhr.status == 403 ) alert("Your query was banned : code 403") ;
+				else alert("An error has occurred");
+        }
+});
+
+
+}
+
+</script>
+
+
+{% set n = epreuves|length %}
+{% set all_names=[] %}
+{% set all_n_names=[] %}
+
+{% for i in 0..n-1 %}
+ {% if epreuves[i].type not in all_names %}
+  {% set all_names=all_names|merge([epreuves[i].type]) %}
+ {% endif %}
+{% endfor %}
+
+{% set n_n=all_names|length %}
+{% set max_all=0 %}
+
+{% for i in 0..n_n-1 %}
+  {% set z=0 %}
+  {% for j in 0..n-1 %}
+    {% if epreuves[j].type==all_names[i] %}{% set z=z+1 %}{% endif %}
+  {% endfor %}
+  {% set all_n_names=all_n_names|merge([z]) %}
+{% endfor %}
+
+{% set max_all=max(all_n_names) %}
+
+<center>
+<div id="tasksDiv" style="width: 100% ; ">
+<div id="BackgroundTask" style="display : none ;">
+<img id="croixFermer" onClick="showTasks()" src="{{ asset('bundles/securinetsfrontoffice/images/croix.png') }}" >
+<div id="zoneLoading" ><center><img style='width:50px ; height : 50px ;' src='{{ asset('bundles/securinetsfrontoffice/images/loading.gif') }}'></center></div>
+<div id="zoneTask" ></div>
+</div>
+<table border="2" bordercolor="black"  id="tableTasks" >
+<caption><h2>Tasks</h2></caption>
+{% for i in 0..n_n-1 %}
+<tr>
+{% set sum_curr=0 %}{% set sum_all=0 %}
+{% for k in 0..n-1 %}
+ {% if epreuves[k].type==all_names[i] %}
+  {% set class = "taskNV" %}
+  {% if epreuves[k].id in epreuvesValides %}{% set class = "taskV" %}{% endif %}
+  {% set colspaned=max_all // all_n_names[i] %}
+  {% if colspaned==0 %}{% set colspaned=1 %}{% endif %}
+  {% set sum_curr=sum_curr+colspaned %}
+  {% set sum_all=sum_all+1 %}
+  {% if sum_all==all_n_names[i] %}{% if sum_curr<max_all %}{% set colspaned=colspaned+max_all-sum_curr %}{% endif %}{% endif %}
+  <td colspan="{{ colspaned }}" class="task {{ class }}" style="padding-left: 5px;"  onClick="getTask('{{ url('getTask',{ 'id_epreuve' : epreuves[k].id}) }}')">
+   <b>{{ epreuves[k].name }} </b><br>
+   <font size="2">{{ epreuves[k].type }}</font><br>
+   ({{ epreuves[k].points }})<br>
+  </td>
+ {% endif %}
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+</div>
+</center>
+
+

@@ -1,0 +1,9 @@
+parameters:
+#    securinets_front_office.example.class: Securinets\FrontOfficeBundle\Example
+
+services:
+    my_logger:
+        class: Securinets\FrontOfficeBundle\Services\LoggerService
+        arguments: ["@logger"]
+        tags:
+            - { name: monolog.logger, channel: myChannel }

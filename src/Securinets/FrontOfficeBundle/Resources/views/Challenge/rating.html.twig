@@ -1,0 +1,76 @@
+
+<style>
+.tableScore
+{
+border: 4px inset grey;
+width : 100% ;
+}
+
+th 
+{
+border: 4px inset grey;
+text-align: center;
+font-size : 20px;
+/* color : #A61000; */
+}
+
+td
+{
+border: 4px inset grey;
+text-align: center;
+font-size : 14px;
+font-weight : bold ;
+}
+
+</style>
+<center><h2>Score Board</h2></center>
+<div  style="/* margin-top : 40px ; */ padding : 20px 20px 20px 20px ; background-color : #101211  ;opacity : 0.9 ; border-radius : 20px ;-webkit-box-shadow: 0 0 10px 5px #124657;Box-shadow:0px 0px 10px 5px #124657;" > <!-- overflow-y : auto ; -->
+
+<center>
+<table class="tableScore">
+  <thead>
+  <th>
+  #
+  </th>
+  <th width=20%>
+  Challenger
+  </th>
+  <th width=60%>
+  Validated Tasks
+  </th>
+  <th width=20%>
+  Score
+  </th>
+  </thead>
+  
+  <tbody>
+  {% for user in list %}
+  <tr>
+    <td>
+    	{{ loop.index }}
+    </td>
+  
+  	<td>
+  		{{  user.username }}
+  	</td>
+  	
+  	<td>
+  		{% set userepreuves = user.epreuves %}
+  		{% set i = 1 %}
+  		{% for us_ep in userepreuves %}
+  		{% if i > 8 %} <br> {% set i = 1 %} {% endif %}
+  		{{ us_ep.epreuve.name }} ,
+  		{% set i = i +1 %}
+  		{% endfor %}
+  	</td>
+  	
+  	<td>
+  		{{ user.score }}
+  	</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</center> 
+</div>
+

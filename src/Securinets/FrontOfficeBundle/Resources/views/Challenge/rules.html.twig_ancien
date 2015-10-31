@@ -1,0 +1,28 @@
+<center>
+<div id="rulesDiv"  style="text-align:left; margin-top : 40px ; 
+ padding : 20px 20px 20px 20px ; 
+ color : #DDDDDD ;
+background-color : #101211  ;opacity : 0.9 ; 
+ border-radius : 20px ; 
+ font-size : 20px;
+ font-weight : bold ;
+ " 
+ > <!-- overflow-y : auto ; -->
+
+<h3>Rules</h3>
+<ul>
+<h3>Les régles de base</h3>   
+<li>CTF Securinets 2015 est un challenge de préqualification créé par les étudiants du club <a href="http://www.securinets.com/">Securinets</a>.</li> 
+<li>Les joueurs devront créer un compte pour participer au défi.</li>
+<li>Les 5 premieres équipes passeront au challenge final qui aura lieu à l'INSAT le 25 Avril 2015 dans la journée Nationale de la sécurité Informatique: Securiday</li>
+<li>La compétition vous oblige à trouver des flags pour gagner des points.</li>
+<li>Les domaines des épreuves porteront sur: Web, Crypto, Stegano, Réseau, Crack/Reverse, Binary/PWN, Hidden, Forensics, Misc.</li>
+<li>Ce challenge ne donne au participants aucune autorisation légale d'exploiter cette plateforme ou de son partenaire d'hébergement d'une manière destructrice.</li>
+<li>Toute attaque contre le site ou les serveurs hébergés sera observ�e sous cadre juridique général.</li>
+<h3>Pour plus de renseignements contactez contact@securinets.com</h3>
+</ul>
+
+If thers is problem contact the admin : challenge@securinets.com
+
+</div>
+</center>

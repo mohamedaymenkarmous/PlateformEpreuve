@@ -1,0 +1,30 @@
+{% extends '::template_parent.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset("bundles/securinetsusers/css/login.css") }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+	<script type="text/javascript" src="{{ asset("bundles/securinetsusers/js/login.js") }}" ></script>
+{% endblock %}
+
+
+		{% block mainBox %}
+ {% if error %}
+    <span class="errors">{{ error.message }}</span>
+{% endif %}
+<div class="rain" >
+<div class="border start">
+<form action="{{ path('login_check') }}" method="post">
+<label for="username">Username :</label>
+<input type="text" id="username"  name="_username" value="{{ last_username }}" />
+<label for="password">Password :</label>
+<input type="password" id="password" name="_password" />
+<input type="hidden" name="hidden" value="RKn353jj2ZM8k" />
+<input style="width:100px; position:relative ; right:38%;"  type="submit" value="Log In"/>
+</form>
+   </div>
+ </div>
+		{% endblock %}
