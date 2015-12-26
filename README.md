@@ -1,7 +1,7 @@
 Symfony Standard Edition
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
+Welcome to the Symfony Standard Edition - a fully-functional Symfony
 application that you can use as the skeleton for your new applications.
 
 For details on how to download and get started with Symfony, see the
@@ -41,9 +41,6 @@ It comes pre-configured with the following bundles:
 
   * [**MonologBundle**][11] - Adds support for Monolog, a logging library
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
   * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
     the web debug toolbar
 
@@ -68,5 +65,4 @@ Enjoy!
 [9]:  https://symfony.com/doc/3.0/book/security.html
 [10]: https://symfony.com/doc/3.0/cookbook/email.html
 [11]: https://symfony.com/doc/3.0/cookbook/logging/monolog.html
-[12]: https://symfony.com/doc/3.0/cookbook/assetic/asset_management.html
 [13]: https://symfony.com/doc/3.0/bundles/SensioGeneratorBundle/index.html

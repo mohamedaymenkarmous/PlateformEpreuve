@@ -10,25 +10,60 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-	
-	public function getRulesAction()
-	{
-		return $this->render("SecurinetsFrontOfficeBundle:Challenge:rules.html.twig");
-	}
-
 	public function indexAction()
 	{
 		return $this->redirect($this->generateUrl('home'));
-		
 	}
-	
-    public function homeAction()
-    {
 
-    	return $this->render('SecurinetsFrontOfficeBundle:Challenge:template_challenger.html.twig'	);
-    }
-    
-    
+	public function homeAction()
+	{
+		return $this->render('SecurinetsFrontOfficeBundle:Challenge:template_challenger.html.twig');
+	}
+
+
+        public function getRulesAction()
+        {
+                return $this->render("SecurinetsFrontOfficeBundle:Challenge:rules.html.twig");
+        }
+
+        public function rulesAction()
+        {
+ 	  if ($this->get("security.authorization_checker")->isGranted('ROLE_CHALLENGER')) $parent='SecurinetsFrontOfficeBundle:Challenge:template_challenger.html.twig';
+	  else $parent='::template_parent.html.twig';
+
+                return $this->render($parent,
+                        array("page_included" => "SecurinetsFrontOfficeBundle:Challenge:rules.html.twig") );
+
+        }
+
+
+	public function tasksAction()
+	{
+        	return $this->render('SecurinetsFrontOfficeBundle:Challenge:template_challenger.html.twig',
+			array("page_included" => "SecurinetsFrontOfficeBundle:Challenge:tasks.html.twig") );
+	}
+
+
+        public function scoreAction()
+        {
+          if ($this->get("security.authorization_checker")->isGranted('ROLE_CHALLENGER')) $parent='SecurinetsFrontOfficeBundle:Challenge:template_challenger.html.twig';
+          else $parent='::template_parent.html.twig';
+
+                return $this->render($parent,
+                        array("page_included" => "SecurinetsFrontOfficeBundle:Challenge:score.html.twig") );
+        }
+
+
+        public function statAction()
+        {
+          if ($this->get("security.authorization_checker")->isGranted('ROLE_CHALLENGER')) $parent='SecurinetsFrontOfficeBundle:Challenge:template_challenger.html.twig';
+          else $parent='::template_parent.html.twig';
+
+                return $this->render($parent,
+                        array("page_included" => "SecurinetsFrontOfficeBundle:Challenge:stat.html.twig") );
+        }
+
+
     public function countDownAction()
     {
     	$rt = $this->remaingTime() ;
@@ -58,7 +93,7 @@ class DefaultController extends Controller
 
  public function remaingTime()
     {
-$tf = mktime(20,59,0,10,17,2015); // a modifier 
+$tf = mktime(15,30,0,11,25,2015); // a modifier 
 $t = time() ;
 $count = $tf -  $t ;
 

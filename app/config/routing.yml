@@ -1,3 +1,6 @@
+#app:
+#    resource: "@AppBundle/Controller/"
+#    type:     annotation
 securinets_users:
     resource: "@SecurinetsUsersBundle/Resources/config/routing.yml"
     prefix:   /
@@ -9,3 +12,4 @@ securinets_front_office:
 securinets_front_office_annotation:
     resource: "@SecurinetsFrontOfficeBundle/Controller/"
     type: annotation
+

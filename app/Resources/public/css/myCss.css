@@ -39,16 +39,17 @@ font-size : 20px;
 	width: 20%;
 	height :100%;
 	float : right ;
+	position:fixed;
 	}
 	
 	article
 	{
 	vertical-align: top;
 	display : block-inline ;
-	margin-left : 22% ;
-	margin-right: 22%;
+	/*margin-left : 22% ;
+	margin-right: 22%;*/
 	height :100%;
-	width : 55%;
+	/*width : 55%;*/
 	}
 	
 	#countDownBlock
@@ -62,4 +63,23 @@ font-size : 20px;
 	#mainBoxDiv
 	{
 opacity : 0.95 ;
+	width:65%;
+	margin:0 auto;
 	}
+/*#tasksDiv{width:75%;}*/
+/*#rulesDiv{width:60%;}*/
+h2{
+  -webkit-box-shadow: 0 0 10px 5px rgb(18, 70, 87);
+  box-shadow: 0px 0px 10px 5px rgb(18, 70, 87);
+  border-radius:20px;
+  background-color: rgb(0, 26, 32);
+}
+
+table{
+border-collapse:initial;
+border-spacing:3px;
+}
+
+*{
+box-sizing:initial;
+}

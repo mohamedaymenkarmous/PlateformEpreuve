@@ -1,3 +1,9 @@
+getLogin:
+    path: /getLogin
+#    resource: "Securinets\UsersBundle\Controller\DefaultController"
+#    pattern: /login
+    defaults: { _controller: SecurinetsUsersBundle:Default:getLogin }
+
 login:
     path: /login
 #    resource: "Securinets\UsersBundle\Controller\DefaultController"
