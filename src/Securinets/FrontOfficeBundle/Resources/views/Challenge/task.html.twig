@@ -102,7 +102,7 @@ $.ajax( {
  {% else %}
 <form method="POST"  id="epreuve_{{ epreuve.id }}_flag" onSubmit="return false;">
 <input type="text"  name="flag"  vId="{{ epreuve.id }}" vUrl="{{ path('validate',{ 'id' : epreuve.id}) }}" id="bsubmit" placeholder="Flag" autocomplete="off"/>
-<button id="bsubmit" type="button" onClick="validate({{ epreuve.id }},'{{ path('validate',{ 'id' : epreuve.id}) }}')"><b>Validate</b></button>
+<button style="color:black;" id="bsubmit" type="button" onClick="validate({{ epreuve.id }},'{{ path('validate',{ 'id' : epreuve.id}) }}')"><b>Validate</b></button>
 </form>
 <div id="zoneResult"></div>
  {% endif %}

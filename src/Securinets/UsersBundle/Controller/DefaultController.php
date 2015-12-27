@@ -23,13 +23,18 @@ class DefaultController extends Controller
         return $this->container->get('request_stack')->getCurrentRequest();
     }*/
 
-    public function loginAction(/*Request $request*/)
+    public function loginAction(Request $request)
     {
-    	//$request = $this->getRequest();
-/*    	$session = $request->getSession();
+        $response = parent::loginAction();
+
+        // do custom stuff
+
+        return $response;
+
+/*    	//$request = $this->getRequest();
+    	$session = $request->getSession();
     	
-    	if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-    	{
+    	if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
     		return $this->redirect($this->generateUrl('home'));
     	}
     	
@@ -40,24 +45,35 @@ class DefaultController extends Controller
     		$error = $session->get(Security::AUTHENTICATION_ERROR);
     		$session->remove(Security::AUTHENTICATION_ERROR);
     	}
-    	
-    	
-    	return $this->render('SecurinetsUsersBundle:Default:login.html.twig', array(
+*/
+/*    	return $this->render('SecurinetsUsersBundle:Default:login.html.twig', array(
     			// last username entered by the user
     			'last_username' => $session->get(Security::LAST_USERNAME),
     			'error'         => $error
-    	));    	*/
-        $helper = $this->get('security.authentication_utils');
+    	));*/
+/*        $helper = $this->get('security.authentication_utils');
 
         return $this->render('SecurinetsUsersBundle:Default:login.html.twig', array(
             'last_username' => $helper->getLastUsername(),
-            'error'         => $helper->getLastAuthenticationError(),
+            'error'         => $helper->getLastAuthenticationError()
         ));
+*/
     }
-    
-    
+
+/*    public function loginAction(){
+        return $this->render('::template_parent.html.twig', array(
+	    'page_included' => 'SecurinetsUsersBundle:Default:login.html.twig'
+        ));
+    }*/
+
+
     public function registerAction(Request $request) {
-	   	
+        $response = parent::registerAction();
+ 
+        // do custom stuff
+ 
+        return $response;
+/*
     	//l'objet user
     	$user = new User();
     	//appel de service
@@ -111,7 +127,7 @@ class DefaultController extends Controller
     	return $this->render('SecurinetsUsersBundle:Default:register.html.twig', array('form' => $form->createView()));
     
 
-    	
+    	*/
     }
      
 

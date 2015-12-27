@@ -2,25 +2,29 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User : plaintext
-        Securinets\UsersBundle\Entity\User:
-            algorithm:   sha512
-            iterations: 1
-            encode_as_base64: false
+#        Symfony\Component\Security\Core\User\User : plaintext
+#        Securinets\UsersBundle\Entity\User:
+#            algorithm:   sha512
+#            iterations: 1
+#            encode_as_base64: false
+        FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
         ROLE_CHALLENGER:       ROLE_USER
-
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+#        in_memory:
             #memory:~
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    amjed:  { password: amjed, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+#            memory:
+#                users:
+#                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+#                    amjed:  { password: amjed, roles: [ 'ROLE_USER' ] }
+#                   admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
         users_dataBase:
             entity : { class: SecurinetsUsersBundle:User, property : username}
@@ -44,23 +48,35 @@ security:
 
             pattern : ^/
             anonymous : true
-            provider: users_dataBase
+#            provider: users_dataBase
             form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
                 check_path: /login_check
                 login_path: /login
                 always_use_default_target_path: true
                 default_target_path: /home
-                intention:                      authenticate
+                #intention:                      authenticate
             logout :
                 path: /logout
-                target: /
+                target: /home
 
     access_control:
+        - { path: ^/getLogin, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+        - { path: ^/getRegister, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+        - { path: ^/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+        - { path: ^/profile, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
         - { path: ^/getRules, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+        - { path: ^/rules, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+        - { path: ^/getScore, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
         - { path: ^/score, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+        - { path: ^/getStat, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
         - { path: ^/stat, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
         - { path: ^/challengerInfo, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
         - { path: ^/getRemaingTime, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
         - { path: ^/ , roles : ROLE_CHALLENGER ,requires_channel: https }
-
+#        - { path: ^/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+#        - { path: ^/register/, roles: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: https }
+#        - { path: ^/admin/, roles: ROLE_ADMIN ,requires_channel: https }

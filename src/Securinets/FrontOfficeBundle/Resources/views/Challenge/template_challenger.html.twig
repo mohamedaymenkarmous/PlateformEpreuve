@@ -1,57 +1,86 @@
 {% extends '::template_parent.html.twig' %}
+{% block header %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!--<a class="navbar-brand" href="index.html"><img class="lien" onclick="$(window).attr('location','{ path('login') }}')" style="height:100%;" src="{{ asset('logo.png') }}"></a>-->
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-left">
+            <li><img class="lien" onclick="$(window).attr('location','{{ path('home') }}')" style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
+            <li><a onclick="getPage('{{ path('getRules') }}');window.history.pushState('object or string', 'Title', 'rules');" class="lien">Rules</a></li>
+            <li><a onclick="getPage('{{ path('getTasks') }}');window.history.pushState('object or string', 'Title', 'tasks');" class="lien">Tasks</a></li>
+            <li><a onclick="getPage('{{ path('getScore') }}');window.history.pushState('object or string', 'Title', 'score');" class="lien">Ranking</a></li>
+            <li><a onclick="getPage('{{ path('getStat') }}');window.history.pushState('object or string', 'Title', 'stat');" class="lien">Statistics</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username  }} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a onclick="getPage('{ path('getProfile') }}');window.history.pushState('object or string', 'Title', 'profile');" class="lien">Profile</a></li>
+		<li><a href="{{ path('logout') }}" class="lien">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
 
-		{% block header %}
+<!--
+ <div class="navbar navbar-inverse">
+  <div class="container">
+   <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+	<li><img  style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
+	<li><a onClick="getPage('{{ path('getRules') }}');window.history.pushState('object or string', 'Title', 'rules');" class="lien">Rules</a></li>
+	<li><a onClick="getPage('{{ path('getTasks') }}');window.history.pushState('object or string', 'Title', 'tasks');" class="lien">Tasks</a></li>
+	<li><a onClick="getPage('{{ path('getScore') }}');window.history.pushState('object or string', 'Title', 'score');"  class="lien">Ranking</a></li>
+	<li><a onClick="getPage('{{ path('getStat')}}');window.history.pushState('object or string', 'Title', 'stat');" class="lien">Statistiques</a></li>
+    </ul>
+   <div class="navbar-right">
+	<a href="{{ path('logout') }}"><button class="btn btn-danger " style="height:50px;"><b>Log out <br>({{ app.user.username  }})</b></button></a>
+   </div>
+  </div>
+ </div>
+</div>-->
+{% endblock %}
 
-<div class="navbar navbar-inverse">
-<div class="container">
-<div class="navbar-collapse collapse">
-<ul class="nav navbar-nav">
-<li><img  style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
-<li ><a onClick="getPage('{{ path('getRules') }}')" class="lien">Rules</a></li>
-<li ><a onClick="getPage('{{ path('getTasks') }}')" class="lien">Tasks</a></li>
-<li ><a  onClick="getPage('{{ path('score') }}')"  class="lien">Ranking</a></li>
-<li ><a onClick="getPage('{{ path('stat')}}')" class="lien">Statistiques</a></li>
-</ul>
-<div class="navbar-right">
-<a href="{{ path('logout') }}"><button class="btn btn-danger " style="height:50px;"><b>Log out <br>({{ app.user.username  }})</b></button></a>
-</div>
-</div>
-</div>
-</div>	
-		{% endblock %}
-		
-		     {% block javascripts %}
-		     {{ parent() }}
-		     <script  language="javascript">
-		     		function getNews(url)
-							{
-							$.ajax(
-								{
-								type : "GET" ,
-								url : url ,
-								dataType : "json",
-								success : function(data){
-								if (data.exist) {
-									alert("Info \n "+data.news);
-								}
-							}
-								}
-								);
-							}
-					window.setInterval(function(){getNews("{{ path('getNews') }}")}
-							,30000
-							);
-		     		</script>
-		     {% endblock %}
-		
-		
-		
-		{% block mainBox %}
-		 {{ render(controller('SecurinetsFrontOfficeBundle:Default:getRules')) }}
-		{% endblock %}
-		
-		
-		
-		{% block info_challenger %}
-				{{ render(controller('SecurinetsFrontOfficeBundle:Challenge:challengerInfo')) }}
+{% block javascripts %}
+ {{ parent() }}
+ <script  language="javascript">
+  function getNews(url){
+   $.ajax({
+	type : "GET" ,
+	url : url ,
+	dataType : "json",
+	success : function(data){
+	 if (data.exist) {alert("Info \n "+data.news);}
+	}
+   });
+  }
+  window.setInterval(function(){getNews("{{ path('getNews') }}")},30000);
+ </script>
+{% endblock %}
+
+{% block mainBox %}
+ {% if page_included is not defined or page_included == false or page_included == "SecurinetsFrontOfficeBundle:Challenge:rules.html.twig" %}{{ render(controller('SecurinetsFrontOfficeBundle:Default:getRules')) }}
+ {% elseif page_included == "SecurinetsFrontOfficeBundle:Challenge:tasks.html.twig" %}{{ render(controller("SecurinetsFrontOfficeBundle:Challenge:getTasks" )) }} {# ou render(path("getTasks")) #}
+ {% elseif page_included == "SecurinetsFrontOfficeBundle:Challenge:score.html.twig" %}{{ render(controller("SecurinetsFrontOfficeBundle:Challenge:getScore" )) }}
+ {% elseif page_included == "SecurinetsFrontOfficeBundle:Challenge:stat.html.twig" %}{{ render(controller("SecurinetsFrontOfficeBundle:Challenge:getStat" )) }}
+ {% endif %}
+{% endblock %}
+
+{% block info_challenger %}
+{{ render(controller('SecurinetsFrontOfficeBundle:Challenge:challengerInfo')) }}
 {% endblock %}

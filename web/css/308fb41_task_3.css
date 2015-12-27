@@ -1,0 +1,66 @@
+@CHARSET "UTF-8";
+
+
+.task
+{
+color : #C7CACA ;
+text-align : center ;
+font-size : 16px ;
+min-width : 150px;
+min-height : 150px ;
+max-width : 150px;
+max-height : 150px ;
+margin : 20px 20px 20px 20px ;
+padding : 20px 20px 20px 20px ;
+}
+
+
+.taskNV
+{
+background-color : #101211 ;
+}
+
+.taskNV:hover
+{
+background-color : #1A1D1D ;
+}
+
+.taskV
+{
+background-color : #012000 ;
+}
+
+
+.taskV:hover
+{
+background-color : #023B00 ;
+}
+
+
+#croixFermer
+{
+width:20px;
+height: 20px ;
+position : relative ;
+top : 10px;
+left : 45% ;
+}
+
+#croixFermer:hover
+{
+width:25px;
+}
+
+#zoneLoading
+{
+	display : none ;
+	position : relative ;
+	top : 50px ;
+}
+
+#zoneTask
+{
+	display : none ;
+	position : relative ;
+	top : 10px ;
+}

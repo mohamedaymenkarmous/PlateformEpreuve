@@ -1,6 +1,5 @@
 <?php
-
-
+// src/AppBundle/Entity/User.php
 
 namespace Securinets\UsersBundle\Entity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -9,337 +8,110 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
- * @ORM\Table()
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Securinets\UsersBundle\Entity\UserRepository")
  */
-class User implements AdvancedUserInterface, \Serializable {
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="username", type="string", length=25 , unique=true)
-	 */
-	private $username;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=25 )
-	 */
-	private $name;	
-	
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="firstname", type="string", length=25 )
-	 */
-	private $firstname;
-	
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="salt", type="string", length=255)
-	 */
-	private $salt;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="password", type="string", length=255)
-	 */
-	private $password;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="email", type="string", length=60 )
-	 */
-	private $email;
-
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="isActive", type="boolean")
-	 */
-	private $isActive;
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="score", type="integer" , nullable = true)
-	 */
-	private $score;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="time", type="time" , nullable=true)
-	 */
-	private $time;
-
-	/** 
-	 * @ORM\Column(name="roles", type="array")
-	 */
-	private $roles;
-	
-	/**
-	 * @ORM\OneToMany(targetEntity="Securinets\FrontOfficeBundle\Entity\EpreuveChallenger", mappedBy="user")
-	 */
-	private $epreuves;
-	
-	/**
-	 * @ORM\OneToMany(targetEntity="Securinets\FrontOfficeBundle\Entity\Flag", mappedBy="equipe")
-	 */
-	private $flags;
-	
-	/**
-	 * @ORM\OneToMany(targetEntity="Securinets\FrontOfficeBundle\Entity\ValidatedFlag", mappedBy="equipe")
-	 */
-	private $Validatedflags;
-	
-	/**
-	 * @ORM\Column(name="avertLevel1" , type="integer" , nullable= true )
-	 */
-	private $avertLevel1;
-	
-	/**
-	 * Get id
-	 *
-	 * @return integer 
-	 */
-	public function getId() {
-		return $this->id;
-	}
-
-	/**
-	 * Set username
-	 *
-	 * @param string $username
-	 * @return User
-	 */
-	public function setUsername($username) {
-		$this->username = $username;
-
-		return $this;
-	}
-
-	/**
-	 * Get username
-	 *
-	 * @return string 
-	 */
-	public function getUsername() {
-		return $this->username;
-	}
-
-	/**
-	 * Set salt
-	 *
-	 * @param string $salt
-	 * @return User
-	 */
-	public function setSalt($salt) {
-		$this->salt = $salt;
-
-		return $this;
-	}
-
-	/**
-	 * Get salt
-	 *
-	 * @return string 
-	 */
-	public function getSalt() {
-		return $this->salt;
-	}
-
-	/**
-	 * Set password
-	 *
-	 * @param string $password
-	 * @return User
-	 */
-	public function setPassword($password) {
-		$this->password = $password;
-
-		return $this;
-	}
-
-	/**
-	 * Get password
-	 *
-	 * @return string 
-	 */
-	public function getPassword() {
-		return $this->password;
-	}
-
-	/**
-	 * Set email
-	 *
-	 * @param string $email
-	 * @return User
-	 */
-	public function setEmail($email) {
-		$this->email = $email;
-
-		return $this;
-	}
-
-	/**
-	 * Get email
-	 *
-	 * @return string 
-	 */
-	public function getEmail() {
-		return $this->email;
-	}
-
-	/**
-	 * Set isActive
-	 *
-	 * @param boolean $isActive
-	 * @return User
-	 */
-	public function setIsActive($isActive) {
-		$this->isActive = $isActive;
-
-		return $this;
-	}
-
-	/**
-	 * Get isActive
-	 *
-	 * @return boolean 
-	 */
-	public function getIsActive() {
-		return $this->isActive;
-	}
-
-	/**
-	 * Set score
-	 *
-	 * @param integer $score
-	 * @return User
-	 */
-	public function setScore($score) {
-		$this->score = $score;
-
-		return $this;
-	}
-
-	/**
-	 * Get score
-	 *
-	 * @return integer 
-	 */
-	public function getScore() {
-		return $this->score;
-	}
-
-	/**
-	 * Set time
-	 *
-	 * @param \DateTime $time
-	 * @return User
-	 */
-	public function setTime($time) {
-		$this->time = $time;
-
-		return $this;
-	}
-
-	/**
-	 * Get time
-	 *
-	 * @return \DateTime 
-	 */
-	public function getTime() {
-		return $this->time;
-	}
-	
-	
-	public function getRoles() {
-		
-		return $this->roles ;
-
-	}
-	public function eraseCredentials() {
-		// TODO: Auto-generated method stub
-
-	}
-	
-	public function serialize()
-	{
-		return serialize(array(
-				$this->id,
-		));
-	}
-	
-	public function unserialize($serialized)
-	{
-		list (
-				$this->id,
-		) = unserialize($serialized);
-	}
-	
-	public function isEqualTo(UserInterface $user)
-	{
-		return $this->username === $user->getUsername();
-	}
-
-
+class User extends BaseUser //implements AdvancedUserInterface
+{
     /**
-     * Set roles
-     *
-     * @param array $roles
-     * @return User
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-    
-        return $this;
-    }
-    
-    public function isAccountNonExpired()
-    {
-    	return true;
-    }
-    
-    public function isAccountNonLocked()
-    {
-    	return true;
-    }
-    
-    public function isCredentialsNonExpired()
-    {
-    	return true;
-    }
-    
-    public function isEnabled()
-    {
-    	return $this->isActive;
-    }
-    
+    protected $id;
+
+        /**
+         * @ORM\Column(name="name", type="string", length=25 )
+         *
+         * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile"})
+         * @Assert\Length(
+         *     min=3,
+         *     max=255,
+         *     minMessage="The name is too short.",
+         *     maxMessage="The name is too long.",
+         *     groups={"Registration", "Profile"}
+         * )
+         */
+        protected $name;
+
+        /**
+         * @ORM\Column(name="firstname", type="string", length=25 )
+         *
+         * @Assert\NotBlank(message="Please enter your first name.", groups={"Registration", "Profile"})
+         * @Assert\Length(
+         *     min=3,
+         *     max=255,
+         *     minMessage="The first name is too short.",
+         *     maxMessage="The first name is too long.",
+         *     groups={"Registration", "Profile"}
+         * )
+         */
+        protected $firstname;
+
+        /**
+         * @var integer
+         *
+         * @ORM\Column(name="score", type="integer" , nullable = true)
+         */
+        protected $score;
+
+
+        /**
+         * @var \DateTime
+         *
+         * @ORM\Column(name="lastValidate", type="integer" , nullable=true)
+         */
+        protected $lastValidate;
+
+        /**
+         * @ORM\OneToMany(targetEntity="Securinets\FrontOfficeBundle\Entity\EpreuveChallenger", mappedBy="user")
+         */
+        private $epreuves;
+
+        /**
+         * @ORM\OneToMany(targetEntity="Securinets\FrontOfficeBundle\Entity\Flag", mappedBy="equipe")
+         */
+        private $flags;
+
+        /**
+         * @ORM\OneToMany(targetEntity="Securinets\FrontOfficeBundle\Entity\ValidatedFlag", mappedBy="equipe")
+         */
+        private $Validatedflags;
+
+        public function serialize()
+        {
+                return serialize(array(
+                                $this->id,
+                ));
+        }
+
+        public function unserialize($serialized)
+        {
+                list (
+                                $this->id,
+                ) = unserialize($serialized);
+        }
+
+        public function isEqualTo(UserInterface $user)
+        {
+                return $this->username === $user->getUsername();
+        }
+
+
     public function __construct()
     {
-    	$this->score = 0 ;
-    	$this->roles= array('ROLE_CHALLENGER');
-    	$this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36) ;
+        parent::__construct();
+        // your own logic
+        $this->score = 0 ;
+        $this->roles= array('ROLE_CHALLENGER');
+	$this->setLastValidate(time());
     }
 
     /**
@@ -351,14 +123,14 @@ class User implements AdvancedUserInterface, \Serializable {
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -374,19 +146,62 @@ class User implements AdvancedUserInterface, \Serializable {
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
-    
+
         return $this;
     }
 
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
         return $this->firstname;
     }
+
+        /**
+         * Set score
+         *
+         * @param integer $score
+         * @return User
+         */
+        public function setScore($score) {
+                $this->score = $score;
+
+                return $this;
+        }
+
+        /**
+         * Get score
+         *
+         * @return integer
+         */
+        public function getScore() {
+                return $this->score;
+        }
+
+        /**
+         * Set lastValidate
+         *
+         * @param integer $lastValidate
+         * @return User
+         */
+        public function setLastValidate($lastValidate) {
+                $this->lastValidate = $lastValidate;
+
+                return $this;
+        }
+
+        /**
+         * Get lastValidate
+         *
+         * @return integer
+         */
+        public function getLastValidate() {
+                return $this->lastValidate;
+        }
+
 
     /**
      * Add epreuves
@@ -397,7 +212,7 @@ class User implements AdvancedUserInterface, \Serializable {
     public function addEpreuve(\Securinets\FrontOfficeBundle\Entity\EpreuveChallenger $epreuves)
     {
         $this->epreuves[] = $epreuves;
-    
+
         return $this;
     }
 
@@ -414,7 +229,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get epreuves
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEpreuves()
     {
@@ -430,7 +245,7 @@ class User implements AdvancedUserInterface, \Serializable {
     public function addEpreuveChallenger(\Securinets\FrontOfficeBundle\Entity\EpreuveChallenger $epreuveChallengers)
     {
         $this->epreuveChallengers[] = $epreuveChallengers;
-    
+
         return $this;
     }
 
@@ -447,7 +262,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get epreuveChallengers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEpreuveChallengers()
     {
@@ -463,14 +278,14 @@ class User implements AdvancedUserInterface, \Serializable {
     public function setAvertLevel1($avertLevel1)
     {
         $this->avertLevel1 = $avertLevel1;
-    
+
         return $this;
     }
 
     /**
      * Get avertLevel1
      *
-     * @return integer 
+     * @return integer
      */
     public function getAvertLevel1()
     {
@@ -487,7 +302,7 @@ class User implements AdvancedUserInterface, \Serializable {
     public function addFlag(\Securinets\FrontOfficeBundle\Entity\Flag $flags)
     {
         $this->flags[] = $flags;
-    
+
         return $this;
     }
 
@@ -504,7 +319,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get flags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFlags()
     {
@@ -520,7 +335,7 @@ class User implements AdvancedUserInterface, \Serializable {
     public function addValidatedflag(\Securinets\FrontOfficeBundle\Entity\ValidatedFlag $validatedflags)
     {
         $this->Validatedflags[] = $validatedflags;
-    
+
         return $this;
     }
 
@@ -537,10 +352,35 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get Validatedflags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getValidatedflags()
     {
         return $this->Validatedflags;
+    }
+
+
+    /**
+     * Add epreufe
+     *
+     * @param \Securinets\FrontOfficeBundle\Entity\EpreuveChallenger $epreufe
+     *
+     * @return User
+     */
+    public function addEpreufe(\Securinets\FrontOfficeBundle\Entity\EpreuveChallenger $epreufe)
+    {
+        $this->epreuves[] = $epreufe;
+
+        return $this;
+    }
+
+    /**
+     * Remove epreufe
+     *
+     * @param \Securinets\FrontOfficeBundle\Entity\EpreuveChallenger $epreufe
+     */
+    public function removeEpreufe(\Securinets\FrontOfficeBundle\Entity\EpreuveChallenger $epreufe)
+    {
+        $this->epreuves->removeElement($epreufe);
     }
 }

@@ -17,12 +17,14 @@ background-image : url('{{ asset( "bundles/securinetsfrontoffice/images/Matrix.g
 function hideTasks()
 {
 $("#tableTasks").hide();
+$("#caption").hide();
 $("#BackgroundTask").toggle('slow');
 }
 
 function showTasks()
 {
 	$("#BackgroundTask").hide();
+	$("#caption").show();
 	$("#tableTasks").toggle('slow');
 }
 
@@ -57,15 +59,18 @@ $.ajax( {
 {% set all_names=[] %}
 {% set all_n_names=[] %}
 
+{% if epreuves is not empty %}
 {% for i in 0..n-1 %}
  {% if epreuves[i].type not in all_names %}
   {% set all_names=all_names|merge([epreuves[i].type]) %}
  {% endif %}
 {% endfor %}
+{% endif %}
 
 {% set n_n=all_names|length %}
 {% set max_all=0 %}
 
+{% if all_names is not empty %}
 {% for i in 0..n_n-1 %}
   {% set z=0 %}
   {% for j in 0..n-1 %}
@@ -73,8 +78,8 @@ $.ajax( {
   {% endfor %}
   {% set all_n_names=all_n_names|merge([z]) %}
 {% endfor %}
-
 {% set max_all=max(all_n_names) %}
+{% endif %}
 
 <center>
 <div id="tasksDiv" style="width: 100% ; ">
@@ -83,11 +88,13 @@ $.ajax( {
 <div id="zoneLoading" ><center><img style='width:50px ; height : 50px ;' src='{{ asset('bundles/securinetsfrontoffice/images/loading.gif') }}'></center></div>
 <div id="zoneTask" ></div>
 </div>
-<table border="2" bordercolor="black"  id="tableTasks" >
-<caption><h2>Tasks</h2></caption>
+<table border="2" bordercolor="black"  id="tableTasks" style="display:table;" >
+<caption id="caption"><h2>Tasks</h2></caption>
 {% for i in 0..n_n-1 %}
 <tr>
 {% set sum_curr=0 %}{% set sum_all=0 %}
+
+{% if epreuves is not empty and all_names is not empty %}
 {% for k in 0..n-1 %}
  {% if epreuves[k].type==all_names[i] %}
   {% set class = "taskNV" %}
@@ -104,8 +111,10 @@ $.ajax( {
   </td>
  {% endif %}
 {% endfor %}
+{% endif %}
 </tr>
 {% endfor %}
+
 </table>
 </div>
 </center>

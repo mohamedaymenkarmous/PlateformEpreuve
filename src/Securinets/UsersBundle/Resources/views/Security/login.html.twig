@@ -1,0 +1,53 @@
+{#% extends '::template_parent.html.twig' %#}
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+{% block stylesheets %}
+ {#{ parent() }#}
+ <link rel="stylesheet" href="{{ asset("bundles/securinetsusers/css/login.css") }}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+ {#{ parent() }#}
+ <script type="text/javascript" src="{{ asset("bundles/securinetsusers/js/login.js") }}" ></script>
+{% endblock %}
+
+{% block mainBox %}
+{% if error is defined and error %}
+    <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+ <div class="rain" >
+  <div class="border start">
+<!--
+   <form action="{{ path('login_check') }}" method="post">
+    <label for="username">Username :</label>
+    <input type="text" id="username"  name="_username" value="{% if last_username is defined %}{{ last_username }}{% endif %}" />
+    <label for="password">Password :</label>
+    <input type="password" id="password" name="_password" />
+    <input type="hidden" name="hidden" value="RKn353jj2ZM8k" />
+    <input style="width:100px; position:relative ; right:38%;"  type="submit" value="Log In"/>
+   </form>
+-->
+
+{% block fos_user_content %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{% if csrf_token is defined %}{{ csrf_token }}{% endif %}" />
+
+    <label for="username">{{ 'security.login.username'|trans }}</label>
+    <input type="text" id="username" name="_username" value="{% if last_username is defined %}{{ last_username }}{% endif %}" required="required" />
+
+    <label for="password">{{ 'security.login.password'|trans }}</label>
+    <input type="password" id="password" name="_password" required="required" />
+
+    <input type="checkbox" id="remember_me" name="_remember_me" value="on" style="display:inline;width:10%;outline:0px;" />
+    <label for="remember_me" style="display:inline;">{{ 'security.login.remember_me'|trans }}</label>
+
+    <input style="width:100px; position:relative ; right:38%; outline:0px;" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+</form>
+{% endblock fos_user_content %}
+
+  </div>
+ </div>
+{% endblock %}

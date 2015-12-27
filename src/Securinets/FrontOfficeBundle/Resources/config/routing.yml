@@ -16,11 +16,21 @@ getRules:
 #    pattern: /getRules
     defaults: { _controller: SecurinetsFrontOfficeBundle:Default:getRules }
 
+rules:
+    path: /rules
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:rules }
+
+
 getTasks:
     path: /getTasks
 #    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
 #    pattern: /getTasks
     defaults: { _controller: SecurinetsFrontOfficeBundle:Challenge:getTasks }
+
+tasks:
+    path: /tasks
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:tasks }
+
 
 validate:
     path: /validate/epreuve/{id}
@@ -30,11 +40,16 @@ validate:
     requirements:
         id : \d+
 
-score:
-    path: /score
+getScore:
+    path: /getScore
 #    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
 #    pattern: /score
-    defaults : { _controller: SecurinetsFrontOfficeBundle:Challenge:score }
+    defaults : { _controller: SecurinetsFrontOfficeBundle:Challenge:getScore }
+
+score:
+    path: /score
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:score }
+
 
 erreurConnexion:
     path: /erreurConnexion
@@ -74,11 +89,16 @@ getNews:
 #    pattern : /getNews
     defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:getNews }
 
+getStat:
+    path: /getStat
+#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
+#    pattern : /getStat
+    defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:getStat }
+
 stat:
     path: /stat
-#    resource: "Securinets\FrontOfficeBundle\Controller\DefaultController"
-#    pattern : /stat
-    defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:stat }
+    defaults: { _controller: SecurinetsFrontOfficeBundle:Default:stat }
+
 
 #getFlagForm:
 #    path: /getFlagForm
@@ -87,3 +107,6 @@ stat:
 #    defaults : { _controller : SecurinetsFrontOfficeBundle:Challenge:getFlagForm }
 
 
+#fos_user_resetting:
+#    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+#    prefix: /resetting

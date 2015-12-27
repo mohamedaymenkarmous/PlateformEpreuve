@@ -1,118 +1,171 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-                 <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}" />   
-        <title>{% block title %}SecuriNets Challenge{% endblock %}</title>
-     {% block javascripts %}
-        {% javascripts 
-               'bundles/securinetsfrontoffice/js/jquery-1.9.1.js'
-               'bundles/securinetsfrontoffice/js/jquery-ui-1.10.3.custom.js'
-               'bundles/securinetsfrontoffice/css/bootstrap/js/bootstrap.js'  
-        %}
-               <script type="text/javascript" src="{{ asset_url }}"></script>
-<script language="javascript">
-		function getPage(url)
-		{
-			$.ajax( {
-				type : "GET",
-			    url : url , 
-			    success : function(data)
-			        {
-			        $('#mainBoxDiv').html(data);
-			        },
-		            error : function(xhr,options,erorrs)
-		            {
-							if (xhr.status == 403 ) alert("Your query was banned : code 403") ;
-							else alert("An error has occurred");
-		            }
-			});
-			$.ajax( {
-				type : "GET",
-			    url : "{{ path('challengerInfo') }}" , 
-			    success : function(data1)
-			        {
-			        $('#infoChallengerDiv').html(data1);
-			        },
-		            error : function(xhr1,options1,erorrs1)
-		            {
-							if (xhr1.status == 403 ) alert("Your query was banned : code 403") ;
-							else alert("An error has occurred");
-		            }
-			});
-		}
+ <head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}" />   
+  <title>{% block title %}SecuriNets Challenge{% endblock %}</title>
+  
+  {% block javascripts %}
+   {% javascripts 
+      'bundles/securinetsfrontoffice/js/jquery-1.9.1.js'
+      'bundles/securinetsfrontoffice/js/jquery-ui-1.10.3.custom.js'
+      'bundles/securinetsfrontoffice/css/bootstrap2/js/bootstrap.js'  
+   %}
+   
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+  <script language="javascript">
+    function getPage(url){
+     $.ajax( {
+	type : "GET",
+	url : url , 
+	success : function(data){
+	  $('#mainBoxDiv').html(data);
+	},
+	error : function(xhr,options,erorrs){
+	  if (xhr.status == 403 ) alert("Your query was banned : code 403") ;
+	  else alert("An error has occurred");
+	}
+     });
+     $.ajax( {
+	type : "GET",
+	url : "{{ path('challengerInfo') }}" , 
+	success : function(data1){
+	  $('#infoChallengerDiv').html(data1);
+	},
+	error : function(xhr1,options1,erorrs1){
+	  if (xhr1.status == 403 ) alert("Your query was banned : code 403") ;
+	  else alert("An error has occurred");
+	}
+     });
+    }
+  </script>
+   {% endjavascripts %}
+  {% endblock %}
 
-</script>
-        {% endjavascripts %} 
- 
-{% endblock %}
+  {% block stylesheets %}
+   {% stylesheets filter='cssrewrite'
+      'bundles/securinetsfrontoffice/css/bootstrap/css/bootstrap-theme.css'
+      'bundles/securinetsfrontoffice/css/bootstrap2/css/bootstrap.css'
+      'bundles/securinetsfrontoffice/css/jquery-ui-1.10.3.custom.css'
+      'bundles/securinetsfrontoffice/css/task.css'
+      '../app/Resources/public/css/myCss.css'
+%}
+   
+  <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+  {% endstylesheets %}
+  <style>
+   .lien:hover{cursor:  pointer;background-color : #505050 ;}	
 
-{% block stylesheets %}
+div.error {
+    margin: .5em 0 0.5em;
+    border: 1px solid;
+    background-repeat: no-repeat;
+            background-position: 10px 50%;
+        padding: 10px 10px 10px 10px;
+        
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 
-     {% stylesheets filter='cssrewrite'
-               'bundles/securinetsfrontoffice/css/bootstrap/css/bootstrap-theme.css'
-               'bundles/securinetsfrontoffice/css/bootstrap/css/bootstrap.css'
-			   'bundles/securinetsfrontoffice/css/jquery-ui-1.10.3.custom.css'  
-			   'bundles/securinetsfrontoffice/css/task.css'  
-			   '../app/Resources/public/css/myCss.css'
-        %}
-			   <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-		{% endstylesheets %}
+    -moz-box-shadow: 0 1px 1px #fff inset;
+    -webkit-box-shadow: 0 1px 1px #fff inset;
+    box-shadow: 0 1px 1px #fff inset;
+}
+.error {
+    border: 1px solid maroon !important;
+    color: #000;
+    background: red;
+}
+header{
+height:75px;
+}
+  </style>
+  {% endblock %}
+ </head>
+ <body style="background-image : url('{{ asset('ctf_website.jpg') }}'); /*background-size: cover ; */ background-attachment:fixed;background-size:100% 100%;background-repeat:no-repeat;">
+  <header>
+   {% block header %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!--<a class="navbar-brand" href="index.html"><img class="lien" onclick="$(window).attr('location','{ path('login') }}')" style="height:100%;" src="{{ asset('logo.png') }}"></a>-->
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-left">
+            <li><img class="lien" onclick="$(window).attr('location','{{ path('login') }}')" style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
+            <li><a onclick="getPage('{{ path('getRules') }}');window.history.pushState('object or string', 'Title', 'rules');" class="lien">Rules</a></li>
+            <li><a onclick="getPage('{{ path('getScore') }}');window.history.pushState('object or string', 'Title', 'score');" class="lien">Ranking</a></li>
+            <li><a onclick="getPage('{{ path('getStat') }}');window.history.pushState('object or string', 'Title', 'stat');" class="lien">Statistics</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a onclick="getPage('{{ path('getLogin') }}');window.history.pushState('object or string', 'Title', 'login');" class="lien">Login</a></li>
+            <li><a onclick="getPage('{{ path('getRegister') }}');window.history.pushState('object or string', 'Title', 'register');" class="lien">Register</a></li>
+            <!--
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="portfolio-1-col.html">1 Column Portfolio</a></li>
+              </ul>
+            </li>-->
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+   {% endblock %}
+  </header>
 
-<style>
-	.lien:hover
-	{
-	cursor:  pointer;
-	background-color : #505050 ;
-	}	
-	</style>
+<!--
+   <div class="navbar navbar-inverse">
+    <div class="container">
+     <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><img class="lien" onClick="$(window).attr('location','{ path('login') }}')"  style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
+	<li ><a onClick="getPage('{ path('getRules') }}');window.history.pushState('object or string', 'Title', 'rules');" class="lien">Rules</a></li>
+	<li ><a  onClick="getPage('{ path('getScore') }}');window.history.pushState('object or string', 'Title', 'score');"  class="lien">Ranking</a></li>
+	<li ><a  onClick="getPage('{ path('getStat') }}');window.history.pushState('object or string', 'Title', 'stat');"  class="lien">Statistiques</a></li>
+      </ul>
+     </div>
+    </div>
+   </div>-->		
+
+  <style>
+   #countDownBlock{position : relative ;height : 50px ;width : 30% ;margin-left : 5%;}
+  </style>
+
+  <div id="countDownBlock" >
+   {% block countDownBlock %}
+   {{ render(controller('SecurinetsFrontOfficeBundle:Default:countDown')) }}
+   {% endblock %}
+  </div>
+
+  <aside class="aside2"  id="infoChallengerDiv">
+  {% block info_challenger %}
+  {% endblock %}
+  </aside>
 		
-		
-{% endblock %}
-
-     </head>
-<body style="background-image : url('{{ asset('ctf_website.jpg') }}'); /*background-size: cover ; */ background-attachment:fixed;background-size:100% 100%;background-repeat:no-repeat;">
-
-		<header>
-		{% block header %}
-		
-		<div class="navbar navbar-inverse">
-<div class="container">
-<div class="navbar-collapse collapse">
-<ul class="nav navbar-nav">
-<li><img class="lien" onClick="$(window).attr('location','{{ path('login') }}')"  style="width:80px ; height:50px;" src="{{ asset('logo.png') }}"></li>
-<li ><a onClick="getPage('{{ path('getRules') }}')" class="lien">Rules</a></li>
-<li ><a  onClick="getPage('{{ path('score') }}')"  class="lien">Ranking</a></li>
-</ul>
-</div>
-</div>
-</div>		
-		{% endblock %}
-</header>
-<style>
-		#countDownBlock
-		{
-		position : relative ;
-		height : 50px ;
-		width : 30% ;
-		margin-left : 5%;
-		
-		}
-</style>
-<div id="countDownBlock" >
-{% block countDownBlock %}
-		 {{ render(controller('SecurinetsFrontOfficeBundle:Default:countDown')) }}
-{% endblock %}
-</div>
-
-<aside class="aside2"  id="infoChallengerDiv">
-{% block info_challenger %}
-			
-{% endblock %}
-</aside>			
-		<article id="mainBoxDiv">
-		{% block mainBox %}	
-		{% endblock %}
-</article>
-</body>
+  <article id="mainBoxDiv">
+  {% block mainBox %}
+   {% if page_included is not defined or page_included == false or page_included == "SecurinetsUsersBundle:Security:login.html.twig" %}
+   {#{ render(path("getLogin",{'error':error} )) }#}
+   {#{ controller('SecurinetsUsersBundle:Security:getLogin') }#}
+	{{ include('SecurinetsUsersBundle:Security:login.html.twig') }}
+   {% elseif page_included == "SecurinetsUsersBundle:Registration:register.html.twig" %}{{ render(path("getRegister" )) }}
+   {% elseif page_included == "SecurinetsFrontOfficeBundle:Challenge:score.html.twig" %}{{ render(path("getScore" )) }}
+   {% elseif page_included == "SecurinetsFrontOfficeBundle:Challenge:stat.html.twig" %}{{ render(path("getStat" )) }}
+   {% elseif page_included == "SecurinetsFrontOfficeBundle:Challenge:rules.html.twig" %}{{ render(path("getRules" )) }}
+   {% endif %}
+  {% endblock %}
+  </article>
+ </body>
 </html>

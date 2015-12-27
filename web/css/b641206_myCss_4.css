@@ -1,0 +1,65 @@
+@CHARSET "UTF-8";
+
+	body
+{
+height :100%;
+width : 100% ;
+background-color: black ;
+color: #DDD;
+font-size : 20px;
+}	
+
+	.aside1
+	{
+	vertical-align: top;
+	display : block-inline ;
+	vertical-align: top;
+	display : block-inline ;
+	width: 20%;
+	height :30%;
+	float : left ;
+	}
+	#ctf
+	{	
+	position : relative ;
+	top : 30%;
+	height : 100%;
+	width: 100%;
+	font-family: Stencil ;
+	font-size : 55px ;
+	-webkit-transform:rotate(270deg);
+	-moz-transform:rotate(270deg);
+	-o-transform:rotate(270deg);
+	-ms-transform:rotate(270deg);
+	}
+	.aside2
+	{
+	vertical-align: top;
+	display : block-inline ;
+	width: 20%;
+	height :100%;
+	float : right ;
+	}
+	
+	article
+	{
+	vertical-align: top;
+	display : block-inline ;
+	margin-left : 22% ;
+	margin-right: 22%;
+	height :100%;
+	width : 55%;
+	}
+	
+	#countDownBlock
+	{
+	height : 10% ;
+	width : 50% ;	
+	position : relative ;
+	top : 10px; 
+	left : 30% ;
+	}
+	#mainBoxDiv
+	{
+opacity : 0.95 ;
+	}
