@@ -1,9 +1,16 @@
 {
   "summary": {
-    "title": "CTF platform Threat Model"
+    "title": "CTF platform Threat Model",
+    "owner": ""
   },
   "detail": {
     "contributors": [],
-    "diagrams": []
+    "diagrams": [
+      {
+        "title": "Diagram",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0
+      }
+    ]
   }
 }
